@@ -6,17 +6,28 @@ class Category:
 
     # Methods
     def deposit(self, amount):
-        return "This is a deposit method"
+        self.amount += amount
+        return "You have successfully deposited ${} in {} category. Your current balance is {}".format(amount, self.category, self.amount)
 
     def check_balance(self, amount):
-        return "This is a check balance method"
+        if self.amount > amount: 
+            return True
+        else:
+            return False
 
     def withdraw(self, amount):
-        return "This is a withdraw method"
+        self.amount -= amount 
+        return "You have successfully withdrawn ${} in {} category. Your current balance is {}".format(amount, self.amount, self.category)
 
-    def transfer(self, amount):
+    def transfer(self, amount, category):
         # Transfer money from one category to another category
-        return "This is a transfer method"
+        if not self.check_balance(amount):
+            return "Transfer not successful"
+
+        self.amount -= amount
+        category.amount += amount
+        return "You have transferred ${} to {} category".format(amount, category.category)
+
 
 category_clothing = Category("Clothing", 100)
 category_food = Category("Food", 150)
@@ -26,7 +37,7 @@ category_pet = Category("Pet", 100)
 category_insurance = Category("Insurance", 200)
 
 
-print(category_clothing.deposit())
-print(category_clothing.check_balance())
-print(category_clothing.withdraw())
-print(category_clothing.transfer())
+print(category_clothing.deposit(50))
+print(category_clothing.check_balance(100))
+print(category_clothing.withdraw(25))
+print(category_clothing.transfer(20, category_entertainment))
